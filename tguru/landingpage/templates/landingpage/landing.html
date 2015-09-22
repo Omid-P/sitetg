@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+
+<body>
+<h1> Piggy bdank </h1>
+<form action="" method="post">
+{% csrf_token %}
+<input id="signup" type="text" name="email" > <!-- this only works in html5 supporting browsers; also the email validation is not especially sophisticated - it would be a better idea to use javascript pattern matching to fully check. -->
+<button id="butt" type="submit" disabled> Sign up for updates </button>
+
+</form>
+
+<script type="text/javascript">
+    var email = document.getElementById("signup");
+    email.addEventListener("input", emailChecker());
+    document.getElementById("signup").addEventListener("input", emailChecker)
+
+    function emailChecker(){
+        var button = document.getElementById("butt");
+        var email_string = document.getElementById("signup").value;
+        var patt = /.*@.*\./;
+        if (patt.test(email_string)){
+            button.disabled = false;
+        }
+        else{
+            button.disabled = true;
+        }
+    }
+</script>
+</body>
+</html>
