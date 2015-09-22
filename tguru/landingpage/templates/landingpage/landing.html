@@ -15,6 +15,9 @@
     input{
         text-align: center;
     }
+    #butt{
+        margin-top: 5px;
+    }
 </style>
 <body>
 <div class="container">
@@ -25,7 +28,7 @@
         <div class="col-md-6 col-md-offset-3 text-center">
         <form action="" method="post">
         {% csrf_token %}
-        <input id="signup" class="form-control input-lg" type="text" name="email" placeholder="saveme@money.com" > <!-- this only works in html5 supporting browsers; also the email validation is not especially sophisticated - it would be a better idea to use javascript pattern matching to fully check. -->
+        <input id="signup" class="form-control input-lg" type="text" name="email" placeholder="yourname@example.com" > <!-- this only works in html5 supporting browsers; also the email validation is not especially sophisticated - it would be a better idea to use javascript pattern matching to fully check. -->
         <button id="butt" class="btn btn-success btn-block" type="submit" disabled> Sign up for updates </button>
     </form>
     </div>
