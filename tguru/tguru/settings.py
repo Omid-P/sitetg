@@ -23,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '+1sw@20mcv5o^3o=osopjjp$s#k+_&fo^0^^fez#zo0ed2zi4j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
-ALLOWED_HOSTS = ['.tguru.org', 'ec2-52-89-88-190.us-west-2.compute.amazonaws.com']
+ALLOWED_HOSTS = ['.tguru.org', 'ec2-52-89-88-190.us-west-2.compute.amazonaws.com','localhost']
 
 
 # Application definition
@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'landingpage'
+    'landingpage',
+    'currencyconv'
 )
 
 MIDDLEWARE_CLASSES = (
