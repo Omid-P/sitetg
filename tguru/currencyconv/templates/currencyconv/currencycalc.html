@@ -13,6 +13,9 @@
         font-size: 60px;
         margin-top: 60px;
     }
+    #div2{
+        padding-top: 20px;
+    }
 </style>
 <body>
 
@@ -41,15 +44,31 @@
 
     </form>
 
-    <button id="ajaxButton">
-        Make a request
+    <button id="about-btn">
+       jquery test
     </button>
+
+</div>
+
+</div>
+<div class="col-md-6 col-md-offset-3 text-center" id="div2">
+<ul class="nav nav-list">
+        <li class="nav-header">Find a Currency</li>
+        <form>
+        <label></label>
+        <li><input  class="search-query span10" type="text" name="suggestion" value="" id="suggestion" /></li>
+        </form>
+</ul>
+
+<div id="cats">
 </div>
 </div>
 
+{% load staticfiles %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 </script>
-<script>
+<script src="{% static "js/cc-ajax.js" %}"></script>
+<!--<script>
     $(document).ready(function(){
         var currencyFrom = document.getElementById("c1").value;
       var currencyTo = document.getElementById("c2").value;
@@ -69,7 +88,7 @@
 });
 </script>
 
-<!--<script type="text/javascript">
+<script type="text/javascript">
     document.getElementById("ajaxButton").onclick = function() {
       var currencyFrom = document.getElementById("c1").value;
       var currencyTo = document.getElementById("c2").value;
