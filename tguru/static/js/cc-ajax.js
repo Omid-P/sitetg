@@ -4,7 +4,8 @@ $(document).ready( function() {
         var currencyTo = $("#c2").val();
         var amount = $("#amount").val();
         $.getJSON('/currency/calculate', {currencyFrom: currencyFrom, currencyTo: currencyTo, amount: amount}, function(data) {
-            alert(amount+" "+currencyFrom+" = "+ data['res']+" "+currencyTo)
+            //alert(amount+" "+currencyFrom+" = "+ data['res']+" "+currencyTo)
+            $("#result").val(data['res'])
             });
 	});
 
@@ -15,5 +16,6 @@ $(document).ready( function() {
          $('#cats').html(data['Abc']);
         });
     });
+
 
 });
