@@ -1,23 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <title></title>
 </head>
+<style>
+    #calc{
+        padding-top: 100px;
+    }
+    h1{
+        font-size: 60px;
+        margin-top: 60px;
+    }
+</style>
 <body>
 
-<form action="" method="post">
-    {% csrf_token %}
-    <select name="CurrencyFrom">
-        <option value="USD">USD</option>
-        <option value="INR">INR</option>
-    </select>
-    <select name="CurrencyTo">
-        <option value="USD">USD</option>
-        <option value="INR">INR</option>
-    </select>
-    <input type="number" name="amount" id="amount" required>
-</form>
+<div class="container">
+<h1 class="text-center"> Currency converter </h1>
+</div>
 
+<div class="container" id="calc">
+<div class="col-md-6 col-md-offset-3 text-center">
+    <form action="" method="post">
+        {% csrf_token %}
+        <label>Currency from</label>
+        <select name="currencyFrom" id="c1">
+        {% for pair in currencies %}
+            <option value="{{ pair.0 }}">{{ pair.1 }}</option>
+        {% endfor %}
+        </select> <br>
+        <label>Currency to</label>
+        <select name="currencyTo" id="c2">
+        {% for pair in currencies %}
+        <option value="{{ pair.0 }}">{{ pair.1 }}</option>
+        {% endfor %}
+        </select> <br>
+        <label>Amount</label>
+        <input type="number" name="amount" id="amount" required> <br>
+
+    </form>
+
+    <button id="ajaxButton">
+        Make a request
+    </button>
+</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+</script>
+<script>
+    $(document).ready(function(){
+        var currencyFrom = document.getElementById("c1").value;
+      var currencyTo = document.getElementById("c2").value;
+      var amount = document.getElementById("amount").value
+    $("button").click(function(){
+        $.ajax({
+            url: "",
+            type: "POST",
+            data: {currencyFrom: currencyFrom,currencyTo: currencyTo,amount: amount},
+            cache:false,
+            dataType: "json",
+            success: function(resp){
+            alert ("resp: "+resp.res);
+    }
+});
+    });
+});
+</script>
+
+<!--<script type="text/javascript">
+    document.getElementById("ajaxButton").onclick = function() {
+      var currencyFrom = document.getElementById("c1").value;
+      var currencyTo = document.getElementById("c2").value;
+      var amount = document.getElementById("amount").value.toString();
+      makeRequest('',currencyFrom, currencyTo, amount);
+  };
+    function makeRequest(url,currencyFrom, currencyTo, amount){
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.onreadystatechange = function alertContents() {
+    if (httpRequest.readyState === 4) {
+      if (httpRequest.status === 200) {
+        alert(httpRequest.responseText);
+      } else {
+        alert('There was a problem with the request.');
+      }
+    }
+  }
+    httpRequest.open('POST', url, true) /*If TRUE (the default), the execution of the JavaScript function will continue while the response of the server has not yet arrived. This is the A in AJAX.*/
+    httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    httpRequest.send("currencyFrom="+currencyFrom+"&currencyTdo="+currencyTo+"&amount="+amount);
+    }
+//+"&CurrencyFrom="+document.getElementById("c1")+"&amount="+document.getElementById("amount").value.toString())
+</script>
+-->
 </body>
 </html>
