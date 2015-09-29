@@ -61,23 +61,29 @@
     {% for review in reviews %}
         <li style="padding-top: 10px; margin-top: 50px;"><h5>{{ review.title }}</h5>
         <p>{{ review.rating }}</p>
-        <p class="well" style="padding: 10px ; margin: 0px 0px 0px 0px;">{{ review.text }}</p>
+        <p class="well" style="padding: 10px 15px 10px 15px; margin: 0px 0px 0px 0px;">{{ review.text }}</p>
         <p>{{ review.author }}</p></li>
     {% endfor %}
         <li>Add a review</li>
         <form>
+            {% csrf_token %}
             <label>Name</label>
-            <input type="text" name="reviewerName" value="" placeholder="Robert Oppenheimer" id="reviewerName"/><br>
+            <input type="text" name="revName" value="" placeholder="Robert Oppenheimer" id="revName"/>
+            <label>Title</label>
+            <input type="text" name="title" value="" id="revTitle"/><br>
             <label>Rating (/5)</label>
             <input type="number" name="rating" id="rating"><br>
             <label>Review text</label>
             <input class="form-control input-large" type="text" name="revText" value="" id="revText"/>
+
         </form>
+
     </ul>
+    <button id="rvw-submit">Post</button>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="{% static "js/csrf.js" %}"></script>
 <script src="{% static "js/cc-ajax.js" %}"></script>
 {% endblock %}
 <!--<script>

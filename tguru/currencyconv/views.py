@@ -7,6 +7,7 @@ from django.http import JsonResponse
 import requests
 import MySQLdb
 from .models import Reviews
+from django.utils import timezone
 
 db_connection = MySQLdb.connect(host="localhost",user="root",passwd="tgpass",db="tguru")
 
@@ -75,3 +76,10 @@ def convert(request):
     #return render(request, 'landingpage/landing.html')
 
 
+def review_handler(request):
+    if request.method == 'POST':
+        rev = Reviews(title=request.POST['title'], rating=request.POST['rating'],
+                      author=request.POST['revName'], text=request.POST['revText'],
+                      created_date=timezone.now())
+        rev.post()
+        return HttpResponse("Thanks")

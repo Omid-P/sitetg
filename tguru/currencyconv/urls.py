@@ -5,5 +5,6 @@ from . import views
 urlpatterns = [
     url(r'^$', views.convert),
     url(r'^suggest_currency/$', views.suggest_currency, name='suggest_currency'),
-    url(r'^calculate/$', views.ajaxcalc)
+    url(r'^calculate/$', views.ajaxcalc),
+    url(r'^submit_review/$', views.review_handler)
     ]
