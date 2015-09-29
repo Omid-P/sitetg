@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 import requests
 import MySQLdb
+from .models import Reviews
 
 db_connection = MySQLdb.connect(host="localhost",user="root",passwd="tgpass",db="tguru")
 
@@ -69,7 +70,8 @@ def convert(request):
         return HttpResponse("%f %s = %f %s" % (float(request.POST['amount']),request.POST['currencyFrom'],float(result), request.POST['currencyTo']))
     else:
         currencies, names = get_currencies(db_connection)
-        return render(request, 'currencyconv/currencycalc.html', {'currencies': currencies})
+        reviews = Reviews.objects.all().order_by('published_date')
+        return render(request, 'currencyconv/currencycalc.html', {'currencies': currencies, 'reviews': reviews})
     #return render(request, 'landingpage/landing.html')
 
 

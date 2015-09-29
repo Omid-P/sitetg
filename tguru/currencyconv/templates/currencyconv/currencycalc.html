@@ -1,23 +1,13 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<style>
-    #calc{
-        padding-top: 100px;
-    }
-    h1{
-        font-size: 60px;
-        margin-top: 60px;
-    }
-    #div2{
-        padding-top: 20px;
-    }
-</style>
-<body>
+-->
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Currency Converter{% endblock %}
+
+{% block body_block %}
 
 <div class="container">
 <h1 class="text-center"> Currency converter </h1>
@@ -66,10 +56,30 @@
 </div>
 </div>
 
-{% load staticfiles %}
+    <div class="col-md-8 col-md-offset-2" id="reviews">
+    <ul class="list-unstyled">
+    {% for review in reviews %}
+        <li style="padding-top: 10px; margin-top: 50px;"><h5>{{ review.title }}</h5>
+        <p>{{ review.rating }}</p>
+        <p class="well" style="padding: 10px ; margin: 0px 0px 0px 0px;">{{ review.text }}</p>
+        <p>{{ review.author }}</p></li>
+    {% endfor %}
+        <li>Add a review</li>
+        <form>
+            <label>Name</label>
+            <input type="text" name="reviewerName" value="" placeholder="Robert Oppenheimer" id="reviewerName"/><br>
+            <label>Rating (/5)</label>
+            <input type="number" name="rating" id="rating"><br>
+            <label>Review text</label>
+            <input class="form-control input-large" type="text" name="revText" value="" id="revText"/>
+        </form>
+    </ul>
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
 </script>
 <script src="{% static "js/cc-ajax.js" %}"></script>
+{% endblock %}
 <!--<script>
     $(document).ready(function(){
         var currencyFrom = document.getElementById("c1").value;
@@ -114,6 +124,6 @@
     }
 //+"&CurrencyFrom="+document.getElementById("c1")+"&amount="+document.getElementById("amount").value.toString())
 </script>
--->
+
 </body>
-</html>
+</html>-->
