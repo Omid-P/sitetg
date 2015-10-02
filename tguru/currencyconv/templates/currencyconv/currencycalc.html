@@ -7,14 +7,37 @@
 
 {% block title %}Currency Converter{% endblock %}
 
+{% block style %}
+    #calc{
+        padding-top: 100px;
+    }
+    h1{
+        font-size: 40px;
+        margin-top: 60px;
+    }
+    #div2{
+        padding-top: 20px;
+    }
+    #bot{
+        background-color: rgb(0, 127, 240);
+        padding-top: 100px;
+    }
+    #mid{
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+    #top{
+        background-color: rgb(0, 127, 240);
+        padding-bottom: 100px;
+    }
+{% endblock %}
+
 {% block body_block %}
 
-<div class="container">
-<h1 class="text-center"> Currency converter </h1>
-</div>
-
-<div class="container" id="calc">
+<section id="top">
+<div class="container" id="calc" >
 <div class="col-md-6 col-md-offset-3 text-center">
+    <h1 class="text-center"> Currency converter </h1>
     <form action="" method="post">
         {% csrf_token %}
         <label>Currency from</label>
@@ -42,7 +65,8 @@
 
 </div>
 
-</div>
+
+<div class="row" >
 <div class="col-md-6 col-md-offset-3 text-center" id="div2">
 <ul class="nav nav-list">
         <li class="nav-header">Find a Currency</li>
@@ -51,18 +75,40 @@
         <li><input  class="search-query span10" type="text" name="suggestion" value="" id="suggestion" /></li>
         </form>
 </ul>
-
-<div id="cats">
 </div>
 </div>
+</div>
+</section>
 
+<section id="mid">
+    <div class="container">
+        <div class="row">
+            <div class = "col-md-10 col-md-offset-1">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sed accumsan quam, sed fringilla nisi. Sed vel placerat nisl, vitae fermentum arcu. Quisque interdum, nulla semper vestibulum malesuada, massa nulla blandit quam, a dignissim quam diam eu lectus. Pellentesque placerat posuere neque. Suspendisse vitae commodo velit. Nunc vel scelerisque risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur posuere orci at risus scelerisque sagittis. Sed aliquet leo id tellus molestie viverra. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam semper nulla nec lacus tempor, vel vehicula justo maximus. Donec accumsan lacinia sem, eu egestas mauris pharetra et. Nullam eu magna elit. Aenean sollicitudin tristique turpis. Sed metus sapien, rutrum molestie feugiat sed, laoreet a arcu.</p>
+
+                <p>Etiam aliquet feugiat commodo. Proin sit amet erat tortor. Donec et turpis a risus facilisis tristique. Quisque dignissim tellus quis libero semper volutpat in id risus. Morbi cursus a sapien in finibus. Nunc sit amet lectus et nibh blandit rhoncus. Integer scelerisque imperdiet lorem, sit amet dapibus massa eleifend at. Morbi arcu erat, finibus eu fermentum quis, iaculis ut turpis. Vestibulum quis lectus vel turpis eleifend faucibus. Nam tempor a sapien ut tempor. Sed eleifend diam in aliquam euismod. Aliquam eget elementum metus.</p>
+
+                <p>Nam commodo est ut velit suscipit, eu euismod nisl dapibus. Curabitur ac maximus nulla. Mauris id nibh sed massa maximus fringilla et at tortor. Aliquam sodales leo quis ante tempor feugiat. Etiam tellus nisl, ornare vitae enim tristique, sollicitudin fermentum nulla. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc gravida posuere elit, non fringilla eros imperdiet eget. Aliquam sagittis libero vel urna semper ultricies. Nunc vestibulum ex et vestibulum dictum. Morbi ullamcorper massa id urna placerat, fermentum convallis turpis tincidunt.</p>
+
+                <p>Praesent erat lectus, ultricies placerat varius non, mattis eu risus. Fusce ullamcorper faucibus egestas. Etiam vel rhoncus neque. Vivamus est elit, laoreet posuere nisl vitae, ultricies volutpat enim. Quisque dignissim sollicitudin nulla venenatis vehicula. Proin ultricies tellus in pharetra tristique. Donec blandit, elit vel aliquet aliquet, dolor dui imperdiet tortor, in ullamcorper quam diam molestie erat.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="bot">
+<div class="container">
+    <div class="row">
     <div class="col-md-8 col-md-offset-2" id="reviews">
     <ul class="list-unstyled">
     {% for review in reviews %}
-        <li style="padding-top: 10px; margin-top: 50px;"><h5>{{ review.title }}</h5>
+        <div class="row well">
+        <div class="col-md-2">{{ review.author }}</div>
+        <div class="col-md-4">{{ review.title }}</div>
         <p>{{ review.rating }}</p>
-        <p class="well" style="padding: 10px 15px 10px 15px; margin: 0px 0px 0px 0px;">{{ review.text }}</p>
-        <p>{{ review.author }}</p></li>
+        <p style="padding: 10px 15px 10px 15px; margin: 0px 0px 0px 0px;">{{ review.text }}</p>
+        </div>
+       
     {% endfor %}
         <li>Add a review</li>
         <form>
@@ -81,6 +127,9 @@
     </ul>
     <button id="rvw-submit">Post</button>
 </div>
+</div>
+</div>
+</section>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="{% static "js/csrf.js" %}"></script>

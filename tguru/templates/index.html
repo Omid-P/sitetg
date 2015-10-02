@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Currency Converter{% endblock %}
+
+{% block body_block %}
+<h1>Tools</h1>
+
+<ul>
+	<li> <a href={% url 'currencyconv.views.convert' %}> currency converter </a> </li>
+
+{% endblock %}
