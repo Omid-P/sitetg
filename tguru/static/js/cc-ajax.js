@@ -11,6 +11,7 @@ $(document).ready( function() {
             });
 	});
 
+
     $("#rvw-submit").click( function(){
         var revName = $("#revName").val();
         var rating = $("#rating").val();

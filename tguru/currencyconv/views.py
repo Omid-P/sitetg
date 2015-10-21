@@ -9,9 +9,39 @@ import MySQLdb
 from .models import Reviews
 from django.utils import timezone
 from .script import currency_converter
+from django.template import RequestContext
+from .forms import DocumentForm
+from .models import TransactionFile
+from django.shortcuts import render_to_response
 
 db_connection = MySQLdb.connect(host="localhost",
                                         user="root",passwd="tgpass",db="tguru")
+
+
+def file_upload(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        newdoc = TransactionFile(docfile = request.FILES['docfile'])
+        newdoc.save()
+        #form.is_valid() isn't working for some reason
+#request.FILES, which is a dictionary containing a key for each FileField (or ImageField, or other FileField subclass) in the form. So the data from the above form would be accessible as request.FILES['file'].
+
+#Note that request.FILES will only contain data if the request method was POST and the <form> that posted the request has the attribute enctype="multipart/form-data". Otherwise, request.FILES will be empty.
+            # Redirect to the document list after POST
+        return HttpResponse('success')
+    else:
+        form = DocumentForm() # A empty, unbound form
+
+    # Render list page with the documents and the form
+    return render_to_response(
+        'currencyconv/upload.html',
+        {'form': form},
+        context_instance=RequestContext(request)
+    )
+
+def upload_success(request):
+    return HttpResponse('Thanks!')
+
 
 def get_currencies(db_connection):
     cursor = db_connection.cursor()
@@ -63,3 +93,16 @@ def review_handler(request):
                       created_date=timezone.now())
         rev.post()
         return HttpResponse("Thanks")
+
+
+
+
+# def comparefx(request):
+#     if request.method == 'GET':
+#         c_from, c_to, amount = (request.GET['currencyFrom'],
+#                                     request.GET['currencyTo'], float(request.GET['amount']))
+#         xend_url = "https://secure.xendpay.com/startquote/api/quote/"
+#         /GB/GBP/FR/EUR
+
+#         "https://secure.xendpay.com/startquote/api/quote/${fromCurrency?.siteSpecificCountryName}/${fromCurrency?.siteSpecificValue}/${toCurrency?.siteSpecificCountryName}/${toCurrency?.siteSpecificValue}/200.00/SR?json"
+#         return HttpResponse(json.dumps({'res': result}), content_type="application/json")

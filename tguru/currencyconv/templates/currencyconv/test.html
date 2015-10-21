@@ -1,41 +1,3 @@
-<!--<!DOCTYPE html>
-<html lang="en">
--->
-{% extends 'base.html' %}
-
-{% load staticfiles %}
-
-{% block meta %} {% endblock %}
-
-{% block title %}Currency Converter{% endblock %}
-
-{% block style %}
-    #calc{
-        padding-top: 100px;
-    }
-    h1{
-        font-size: 40px;
-        margin-top: 60px;
-    }
-    #div2{
-        padding-top: 20px;
-    }
-    #bot{
-        background-color: rgb(0, 127, 240);
-        padding-top: 100px;
-    }
-    #mid{
-        padding-top: 100px;
-        padding-bottom: 100px;
-    }
-    #top{
-        background-color: rgb(0, 127, 240);
-        padding-bottom: 100px;
-    }
-{% endblock %}
-
-{% block body_block %}
-
 <section id="top">
 <div class="container" id="calc" >
 <div class="col-md-6 col-md-offset-3 text-center">
@@ -45,21 +7,13 @@
         <label>Currency from</label>
         <select name="currencyFrom" id="c1">
         {% for pair in currencies %}
-        {% if pair.0  == "GBP" %}
-        <option value="{{ pair.0 }}" selected="selected">{{ pair.1 }}</option>
-        {% else %}
-        <option value="{{ pair.0 }}"> {{ pair.1 }}</option>
-        {% endif %}
+            <option value="{{ pair.0 }}">{{ pair.1 }}</option>
         {% endfor %}
         </select> <br>
         <label>Currency to</label>
         <select name="currencyTo" id="c2">
         {% for pair in currencies %}
-        {% if pair.0  == "EUR" %}
-        <option value="{{ pair.0 }}" selected="selected">{{ pair.1 }}</option>
-        {% else %}
-        <option value="{{ pair.0 }}"> {{ pair.1 }}</option>
-        {% endif %}
+        <option value="{{ pair.0 }}">{{ pair.1 }}</option>
         {% endfor %}
         </select> <br>
         <label>Amount</label>
@@ -146,52 +100,21 @@
 
 <script type="text/javascript" src="{% static "js/csrf.js" %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="{% static "js/cc-ajax.js" %}"></script>
-{% endblock %}
-<!--<script>
-    $(document).ready(function(){
-        var currencyFrom = document.getElementById("c1").value;
-      var currencyTo = document.getElementById("c2").value;
-      var amount = document.getElementById("amount").value
-    $("button").click(function(){
-        $.ajax({
-            url: "",
-            type: "POST",
-            data: {currencyFrom: currencyFrom,currencyTo: currencyTo,amount: amount},
-            cache:false,
-            dataType: "json",
-            success: function(resp){
-            alert ("resp: "+resp.res);
-    }
-});
+<script>
+$(document).ready( function() {
+$("#about-btn").click( function() {
+        var currencyFrom = $("#c1").val();
+        var currencyTo = $("#c2").val();
+        var amount = $("#amount").val();
+            $.get("https://secure.xendpay.com/startquote/api/quote/GB/"+currencyFrom+"/FR/"+currencyTo+"/200.00/SR?json", function(data) {
+            var xend = data['xpRate'];
+            $("body").append("<p>"+ xend +"</p> <br> <p> "+tgo+" </p><br>");
+            });
+
+  
+
+        
+
+            });
     });
-});
 </script>
-
-<script type="text/javascript">
-    document.getElementById("ajaxButton").onclick = function() {
-      var currencyFrom = document.getElementById("c1").value;
-      var currencyTo = document.getElementById("c2").value;
-      var amount = document.getElementById("amount").value.toString();
-      makeRequest('',currencyFrom, currencyTo, amount);
-  };
-    function makeRequest(url,currencyFrom, currencyTo, amount){
-    var httpRequest = new XMLHttpRequest();
-    httpRequest.onreadystatechange = function alertContents() {
-    if (httpRequest.readyState === 4) {
-      if (httpRequest.status === 200) {
-        alert(httpRequest.responseText);
-      } else {
-        alert('There was a problem with the request.');
-      }
-    }
-  }
-    httpRequest.open('POST', url, true) /*If TRUE (the default), the execution of the JavaScript function will continue while the response of the server has not yet arrived. This is the A in AJAX.*/
-    httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    httpRequest.send("currencyFrom="+currencyFrom+"&currencyTdo="+currencyTo+"&amount="+amount);
-    }
-//+"&CurrencyFrom="+document.getElementById("c1")+"&amount="+document.getElementById("amount").value.toString())
-</script>
-
-</body>
-</html>-->
