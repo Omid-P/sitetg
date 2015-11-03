@@ -6,12 +6,12 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 import requests
 import MySQLdb
-from .models import Reviews
+from reviews.models import Review
 from django.utils import timezone
 from .script import currency_converter
 from django.template import RequestContext
 from .forms import DocumentForm
-from .models import TransactionFile
+from .models import TransactionFile, Country, Currency
 from django.shortcuts import render_to_response
 
 db_connection = MySQLdb.connect(host="localhost",
@@ -80,15 +80,16 @@ def convert(request):
         result = float(request.POST['amount']) * float(yql_json['query']['results']['rate']['Rate'])
         return HttpResponse("%f %s = %f %s" % (float(request.POST['amount']),request.POST['currencyFrom'],float(result), request.POST['currencyTo']))
     else:
-        currencies, names = get_currencies(db_connection)
-        reviews = Reviews.objects.all().order_by('published_date')
-        return render(request, 'currencyconv/currencycalc.html', {'currencies': currencies, 'reviews': reviews})
+        # currencies, names = get_currencies(db_connection)
+        countries = Country.objects.filter(enabled=True).order_by('country_name')
+        reviews = Review.objects.all().order_by('published_date')
+        return render(request, 'currencyconv/currencycalc.html', {'countries': countries, 'reviews': reviews})
     #return render(request, 'landingpage/landing.html')
 
 
 def review_handler(request):
     if request.method == 'POST':
-        rev = Reviews(title=request.POST['title'], rating=request.POST['rating'],
+        rev = Review(title=request.POST['title'], rating=request.POST['rating'],
                       author=request.POST['revName'], text=request.POST['revText'],
                       created_date=timezone.now())
         rev.post()

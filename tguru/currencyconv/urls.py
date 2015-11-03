@@ -5,9 +5,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-urlpatterns = patterns('',
-    (r'^', include('myapp.urls')),
-) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# urlpatterns = patterns('',
+#     (r'^', include('myapp.urls')),
+# ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns = [
     url(r'^$', views.convert),
     url(r'^suggest_currency/$', views.suggest_currency, name='suggest_currency'),

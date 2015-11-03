@@ -44,21 +44,21 @@
         {% csrf_token %}
         <label>Currency from</label>
         <select name="currencyFrom" id="c1">
-        {% for pair in currencies %}
-        {% if pair.0  == "GBP" %}
-        <option value="{{ pair.0 }}" selected="selected">{{ pair.1 }}</option>
+        {% for country in countries %}
+        {% if country.currency.code  == "GBP" %}
+        <option value="{{ country.currency.code }}" selected="selected">{{ country.country_name }}</option>
         {% else %}
-        <option value="{{ pair.0 }}"> {{ pair.1 }}</option>
+        <option value="{{ country.currency.code }}"> {{ country.country_name }}</option>
         {% endif %}
         {% endfor %}
         </select> <br>
         <label>Currency to</label>
         <select name="currencyTo" id="c2">
-        {% for pair in currencies %}
-        {% if pair.0  == "EUR" %}
-        <option value="{{ pair.0 }}" selected="selected">{{ pair.1 }}</option>
+        {% for country in countries %}
+        {% if country.iso3  == "IND" %}
+        <option value="{{ country.currency.code }}" selected="selected">{{ country.country_name }}</option>
         {% else %}
-        <option value="{{ pair.0 }}"> {{ pair.1 }}</option>
+        <option value="{{ country.currency.code }}"> {{ country.country_name }}</option>
         {% endif %}
         {% endfor %}
         </select> <br>
@@ -144,9 +144,10 @@
 </div>
 </section>
 
-<script type="text/javascript" src="{% static "js/csrf.js" %}"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="{% static "js/cc-ajax.js" %}"></script>
+<script type="text/javascript" src="{% static "js/csrf.js" %}"></script>
 {% endblock %}
 <!--<script>
     $(document).ready(function(){
