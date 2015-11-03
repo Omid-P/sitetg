@@ -147,7 +147,10 @@ for json_res in results:
 	prov = response_methods[json_res['url']]
 	rate_lookup = prov['response_item']
 	name = prov['name']
-	rates.append({'name': name, 'rate': extract_rate(json_res)})
+	try:
+		rates.append({'name': name, 'rate': extract_rate(json_res)})
+	except:
+		rates.append({'name': name, 'rate': 'error'})
 
 ordered = sorted(rates, key=lambda k: k['rate'], reverse=True)
 #print ordered
