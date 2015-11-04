@@ -1,7 +1,50 @@
 __author__ = 'alexhooker'
 
 import MySQLdb
+import grequests
+from .models import Provider, Country, Currency
 
+#need to think about how these variables could be defined within my functions (if, that is, they need to be)
+results=[]
+rates = []
+
+def extract_rate(json_res, rate_lookup):
+    i = 0
+    while i < len(rate_lookup):
+        json_res = json_res[rate_lookup[i]]
+        i = i+1
+    return float(json_res)
+
+def add_response(r, *args, **kwargs):
+    rjs = r.json()
+    rjs['url'] = r.url
+    results.append(rjs)
+
+def compare_rates(country_from, country_to, amount):
+    prov_list = Provider.objects.all().distinct()
+
+    response_methods = {}
+    for provider in prov_list:
+        if provider.name == 'Xendpay':
+            provider.response_item = ['xpRate']
+        elif provider.name == 'Azimo':
+            provider.response_item = ['rate','rate']
+        response_methods[provider.format_url(country_from,country_to,amount)] = {
+                    'response_item': provider.response_item, 'name': provider.name}
+    
+    rs = [grequests.get(provider.format_url(country_from,country_to,amount),
+                        hooks={'response': [add_response]}, timeout=3.501) for provider in prov_list]
+    done = grequests.map(rs) #this is required to actually send the requests.
+    for json_res in results:
+        prov = response_methods[json_res['url']]
+        rate_lookup = prov['response_item']
+        name = prov['name']
+        try:
+            rates.append({'name': name, 'rate': extract_rate(json_res, rate_lookup)})
+        except:
+            rates.append({'name': name, 'rate': 'error'})
+    ordered = sorted(rates, key=lambda k: k['rate'], reverse=True)
+    return ordered
 
 def currency_converter(currency_from, currency_to, amount):
     import urllib2
@@ -27,6 +70,7 @@ def currency_converter(currency_from, currency_to, amount):
 
 def name(num):
     return num*10000000.0
+
 #def currencylist():
 #    r = requests.get('http://openexchangerates.org/currencies.json')
 #    currencies = r.json()

@@ -1,13 +1,22 @@
 $(document).ready( function() {
 	$("#about-btn").click( function() {
-        var currencyFrom = $("#c1").val();
-        var currencyTo = $("#c2").val();
+        var countryFrom = $("#c1").val();
+        var countryTo = $("#c2").val();
         var amount = $("#amount").val();
         $.getJSON('/currency/calculate',
-            {currencyFrom: currencyFrom, currencyTo: currencyTo, amount: amount},
+            {countryFrom: countryFrom, countryTo: countryTo, amount: amount},
             function(data) {
             //alert(amount+" "+currencyFrom+" = "+ data['res']+" "+currencyTo)
-            $("#result").val(data['res'])
+                $("#rates").empty()
+                var resultList = data['comp']
+                $("#result").val(data['res'])
+                for(i=0;i<resultList.length;i++){
+                    resultdict = resultList[1]
+                    $('<span></span>',{
+                        text:resultList['name'] + "Rate:" + resultdict.rate
+                        }).appendTo("#rates")
+                }
+                
             });
 	});
 

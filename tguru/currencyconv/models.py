@@ -1,8 +1,6 @@
 from django.db import models
 from django.utils import timezone
 
-
-
 class Currency(models.Model):
      enabled = models.BooleanField(default=True)
      code = models.CharField(max_length=3)
@@ -42,12 +40,12 @@ class Provider(models.Model):
     # request_method = models.CharField(max)
     currencies = models.ManyToManyField(Currency) #many to many - a channel is associated with many currencies; a currency is associated with many channels
     def format_url(self, country_from, country_to, amount):
-        param_list = []
+        param_list = Apiparams.objects.filter(provider = self).values_list('param',flat=True).order_by('order_number')
         lookup = {'country_from.iso2': country_from.iso2, 'country_from.iso3': country_from.iso3,
-         'country_from.currency_code': country_from.currency_code, 'country_to.iso2': country_to.iso2,
-         'country_to.iso3': country_to.iso3, 'country_to.currency_code': country_to.currency_code, 'amount': amount}
-        params = [lookup[i] for i in self.apiparams_set.all()] #this isn't going to work at the moment - I'll get a list of objects.
-        return self.url.format(*params)
+         'country_from.currency_code': country_from.currency.code, 'country_to.iso2': country_to.iso2,
+         'country_to.iso3': country_to.iso3, 'country_to.currency_code': country_to.currency.code, 'amount': amount}
+        params = [lookup[i] for i in param_list] #this isn't going to work at the moment - I'll get a list of objects.
+        return self.scrape_url.format(*params)
     def get_rate(self, url):
         if self.request_method == 'get':
             r = requests.get(url)

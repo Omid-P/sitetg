@@ -8,7 +8,7 @@ import requests
 import MySQLdb
 from reviews.models import Review
 from django.utils import timezone
-from .script import currency_converter
+from .script import currency_converter, compare_rates
 from django.template import RequestContext
 from .forms import DocumentForm
 from .models import TransactionFile, Country, Currency
@@ -65,15 +65,23 @@ def suggest_currency(request):
 
 def ajaxcalc(request):
     if request.method == 'GET':
-        result = currency_converter(request.GET['currencyFrom'],
-                                    request.GET['currencyTo'], float(request.GET['amount']))
-        return HttpResponse(json.dumps({'res': result}), content_type="application/json")
+        countryfrom = Country.objects.filter(id=request.GET['countryFrom']).first()
+        countryto = Country.objects.filter(id=request.GET['countryTo']).first()
+        amount = float(request.GET['amount'])
+        currencyfrom = countryfrom.currency.code
+        currencyto = countryto.currency.code
+        result = currency_converter(currencyfrom,
+                                    currencyto, amount)
+        compare = compare_rates(countryfrom, countryto, amount)
+        return HttpResponse(json.dumps({'res': result, 'comp': compare}), content_type="application/json")
 
 def convert(request):
     #return HttpResponse("hello")
     if request.method == 'POST':
         yql_base_url = "https://query.yahooapis.com/v1/public/yql"
-        yql_query = 'select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20("'+request.POST['currencyFrom']+request.POST['currencyTo']+'")'
+        currencyfrom = Country.objects.filter(id=request.POST['countryFrom']).first().currency.code
+        currencyto = Country.objects.filter(id=request.POST['countryTo']).first().currency.code
+        yql_query = 'select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20("'+currencyfrom+currencyto+'")'
         yql_query_url = yql_base_url + "?q=" + yql_query + "&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys"
         yql_response = urllib2.urlopen(yql_query_url)
         yql_json = json.loads(yql_response.read())
