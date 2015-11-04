@@ -5,24 +5,24 @@ import grequests
 from .models import Provider, Country, Currency
 
 #need to think about how these variables could be defined within my functions (if, that is, they need to be)
-results=[]
-rates = []
-
 def extract_rate(json_res, rate_lookup):
     i = 0
     while i < len(rate_lookup):
         json_res = json_res[rate_lookup[i]]
         i = i+1
     return float(json_res)
-
-def add_response(r, *args, **kwargs):
-    rjs = r.json()
-    rjs['url'] = r.url
-    results.append(rjs)
+    
+def hook_wrapper(result_list):
+    def add_response(r, *args, **kwargs):
+        rjs = r.json()
+        rjs['url'] = r.url
+        result_list.append(rjs)
+    return add_response
 
 def compare_rates(country_from, country_to, amount):
     prov_list = Provider.objects.all().distinct()
-
+    results=[]
+    rates = []
     response_methods = {}
     for provider in prov_list:
         if provider.name == 'Xendpay':
@@ -33,7 +33,7 @@ def compare_rates(country_from, country_to, amount):
                     'response_item': provider.response_item, 'name': provider.name}
     
     rs = [grequests.get(provider.format_url(country_from,country_to,amount),
-                        hooks={'response': [add_response]}, timeout=3.501) for provider in prov_list]
+                        hooks={'response': [hook_wrapper(results)]}, timeout=3.501) for provider in prov_list]
     done = grequests.map(rs) #this is required to actually send the requests.
     for json_res in results:
         prov = response_methods[json_res['url']]

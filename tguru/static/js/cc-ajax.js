@@ -11,9 +11,10 @@ $(document).ready( function() {
                 var resultList = data['comp']
                 $("#result").val(data['res'])
                 for(i=0;i<resultList.length;i++){
-                    resultdict = resultList[1]
-                    $('<span></span>',{
-                        text:resultList['name'] + "Rate:" + resultdict.rate
+                    resultdict = resultList[i]
+                    $('<div></div>',{
+                        text:resultdict['name'] + " Rate: " + resultdict.rate,
+                        "class": "row"
                         }).appendTo("#rates")
                 }
                 
