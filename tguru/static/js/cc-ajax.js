@@ -1,25 +1,32 @@
 $(document).ready( function() {
-	$("#about-btn").click( function() {
+	// $("#about-btn").click( function() {
+ //        var countryFrom = $("#c1").val();
+ //        var countryTo = $("#c2").val();
+ //        var amount = $("#amount").val();
+ //        $.getJSON('/currency/calculate',
+ //            {countryFrom: countryFrom, countryTo: countryTo, amount: amount},
+ //            function(data) {
+ //            //alert(amount+" "+currencyFrom+" = "+ data['res']+" "+currencyTo)
+ //                $("#rates").empty()
+ //                var resultList = data['comp']
+ //                $("#result").val(data['res'])
+ //                for(i=0;i<resultList.length;i++){
+ //                    resultdict = resultList[i]
+ //                    $('<div></div>',{
+ //                        text:resultdict['name'] + " Rate: " + resultdict.rate,
+ //                        "class": "row"
+ //                        }).appendTo("#rates")
+ //                }
+                
+ //            });
+	// });
+
+    $("#about-btn").click( function() {
         var countryFrom = $("#c1").val();
         var countryTo = $("#c2").val();
         var amount = $("#amount").val();
-        $.getJSON('/currency/calculate',
-            {countryFrom: countryFrom, countryTo: countryTo, amount: amount},
-            function(data) {
-            //alert(amount+" "+currencyFrom+" = "+ data['res']+" "+currencyTo)
-                $("#rates").empty()
-                var resultList = data['comp']
-                $("#result").val(data['res'])
-                for(i=0;i<resultList.length;i++){
-                    resultdict = resultList[i]
-                    $('<div></div>',{
-                        text:resultdict['name'] + " Rate: " + resultdict.rate,
-                        "class": "row"
-                        }).appendTo("#rates")
-                }
-                
-            });
-	});
+        $('#rates').html(' ').load('/currency/retrieve_rates/', { 'countryFrom': countryFrom, 'countryTo': countryTo, 'amount': amount});
+    });
 
 
     $("#rvw-submit").click( function(){

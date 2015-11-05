@@ -79,12 +79,9 @@
 </div>
 </section>
 
-<section id="mid">
-    <div class="container">
-        <div class="row">
-            <div class = "col-md-10 col-md-offset-1" id="rates">
-
-
+<section class="section-grey table-rating">
+    <div class="container" id="rates">
+       
                <!--  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sed accumsan quam, sed fringilla nisi. Sed vel placerat nisl, vitae fermentum arcu. Quisque interdum, nulla semper vestibulum malesuada, massa nulla blandit quam, a dignissim quam diam eu lectus. Pellentesque placerat posuere neque. Suspendisse vitae commodo velit. Nunc vel scelerisque risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur posuere orci at risus scelerisque sagittis. Sed aliquet leo id tellus molestie viverra. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam semper nulla nec lacus tempor, vel vehicula justo maximus. Donec accumsan lacinia sem, eu egestas mauris pharetra et. Nullam eu magna elit. Aenean sollicitudin tristique turpis. Sed metus sapien, rutrum molestie feugiat sed, laoreet a arcu.</p>
 
                 <p>Etiam aliquet feugiat commodo. Proin sit amet erat tortor. Donec et turpis a risus facilisis tristique. Quisque dignissim tellus quis libero semper volutpat in id risus. Morbi cursus a sapien in finibus. Nunc sit amet lectus et nibh blandit rhoncus. Integer scelerisque imperdiet lorem, sit amet dapibus massa eleifend at. Morbi arcu erat, finibus eu fermentum quis, iaculis ut turpis. Vestibulum quis lectus vel turpis eleifend faucibus. Nam tempor a sapien ut tempor. Sed eleifend diam in aliquam euismod. Aliquam eget elementum metus.</p>
@@ -92,7 +89,6 @@
                 <p>Nam commodo est ut velit suscipit, eu euismod nisl dapibus. Curabitur ac maximus nulla. Mauris id nibh sed massa maximus fringilla et at tortor. Aliquam sodales leo quis ante tempor feugiat. Etiam tellus nisl, ornare vitae enim tristique, sollicitudin fermentum nulla. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc gravida posuere elit, non fringilla eros imperdiet eget. Aliquam sagittis libero vel urna semper ultricies. Nunc vestibulum ex et vestibulum dictum. Morbi ullamcorper massa id urna placerat, fermentum convallis turpis tincidunt.</p>
 
                 <p>Praesent erat lectus, ultricies placerat varius non, mattis eu risus. Fusce ullamcorper faucibus egestas. Etiam vel rhoncus neque. Vivamus est elit, laoreet posuere nisl vitae, ultricies volutpat enim. Quisque dignissim sollicitudin nulla venenatis vehicula. Proin ultricies tellus in pharetra tristique. Donec blandit, elit vel aliquet aliquet, dolor dui imperdiet tortor, in ullamcorper quam diam molestie erat.</p> -->
-            </div>
         </div>
     </div>
 </section>
@@ -136,6 +132,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="{% static "js/cc-ajax.js" %}"></script>
 <script type="text/javascript" src="{% static "js/csrf.js" %}"></script>
+<script type="text/javascript">
+$('.container').on('click','.drop' , function(){
+        $(this).closest('.card').find('.slidingDiv').slideToggle(300)
+    });
+</script>
+
 {% endblock %}
 <!--<script>
     $(document).ready(function(){

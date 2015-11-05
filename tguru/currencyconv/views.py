@@ -75,6 +75,23 @@ def ajaxcalc(request):
         compare = compare_rates(countryfrom, countryto, amount)
         return HttpResponse(json.dumps({'res': result, 'comp': compare}), content_type="application/json")
 
+def load_results(request):
+    if request.method == 'POST':
+        countryfrom = Country.objects.filter(id=request.POST['countryFrom']).first()
+        countryto = Country.objects.filter(id=request.POST['countryTo']).first()
+        amount = float(request.POST['amount'])
+        currencyfrom = countryfrom.currency.code
+        currencyto = countryto.currency.code
+        result = currency_converter(currencyfrom,
+                                    currencyto, amount)
+        compare = compare_rates(countryfrom, countryto, amount)
+        for rate_dict in compare:
+            rate_dict['amount_received'] = amount*rate_dict['rate']
+            rate_dict['cost'] = result - rate_dict['amount_received']
+
+        data = {'result_list': compare}
+        return render(request, 'currencyconv/results.html', data)
+
 def convert(request):
     #return HttpResponse("hello")
     if request.method == 'POST':

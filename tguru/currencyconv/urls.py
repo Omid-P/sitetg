@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^calculate/$', views.ajaxcalc),
     url(r'^submit_review/$', views.review_handler),
     url(r'^upload/$', views.file_upload),
-    url(r'^upload/$', views.upload_success, name='success')
+    url(r'^upload/$', views.upload_success, name='success'),
+    url(r'^retrieve_rates/$', views.load_results)
 #    url(r'^comparefx/$', views.comparefx)
     ]

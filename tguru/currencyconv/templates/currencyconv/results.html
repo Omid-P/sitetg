@@ -1,0 +1,120 @@
+
+{% for result in result_list %}
+
+<div class="card" id="channel${exchangeRate?.channel?.id}">
+    <div class="row">
+        <a href="">
+            <div class="col-md-3 col-lg-3 col-sm-6 hidden-xs  text-center">
+                <img src=""alt="{{ result.name }}" style="width: 100%">
+            </div>
+
+            <div class="col-xs-6  hidden-md hidden-sm hidden-lg text-center" style="margin: 10px 0">
+                <img src="" alt="{{ result.name }}" style="width: 100%">
+            </div>
+        </a>
+
+        <div class="col-md-2 col-lg-2 col-sm-2 hidden-xs text-center">
+            <h5 class="one-row"><b>{{ result.name }}</b></h5>
+        </div>
+
+        <div class="col-xs-6  hidden-md hidden-sm hidden-lg text-center" style="margin: 10px 0">
+            <h5 class="one-row"><b>{{ result.name }}</b></h5>
+        </div>
+
+        <div class="col-md-2 col-lg-2  col-sm-2 hidden-xs text-center">
+            <p class="title text-info">Speed</p>
+            <h5>1 day</h5>
+        </div>
+
+        <div class="col-xs-4  hidden-md hidden-sm hidden-lg text-center" style="margin: 10px 0">
+            <p class="title text-info">Speed</p>
+            <h5>1 day</h5>
+        </div>
+
+        <div class="col-md-2 col-lg-2 col-sm-2 hidden-xs text-center">
+            <p class="title text-info">Total cost</p>
+            <h5>{{ result.cost }}</h5>
+            <button type="button" style="color: white; font-size: 13px; margin-top: 5px; padding:4px" class="btn btn-info btn-block show_hide drop">See more<span style="margin-left: 6px"class="glyphicon glyphicon-info-sign"></span></button>
+        </div>
+
+        <div class="col-xs-4  hidden-md hidden-sm hidden-lg text-center" style="margin: 10px 0">
+            <p class="title text-info">Total cost</p>
+            <h5>{{ result.cost }}</h5>
+        </div>
+
+        <div class="col-md-2 col-lg-2 col-sm-2 hidden-xs text-center">
+            <p class="title text-info">You get</p>
+            <h5>{{ result.amount_received }}</h5>
+        </div>
+
+        <div class="col-xs-4  hidden-md hidden-sm hidden-lg text-center" style="margin: 10px 0">
+            <p class="title text-info">You get</p>
+            <h5>{{ result.amount_received }}</h5>
+        </div>
+
+        <div class="col-md-2 col-lg-2 col-sm-2 hidden-xs text-center">
+            <p class="title text-info">Rating</p>
+        </div>
+
+        <div class="col-xs-6  hidden-md hidden-sm hidden-lg text-center" style="margin: 10px 0">
+            <p class="title text-info">Rating</p>
+        </div>
+
+        <div class="col-md-2 col-lg-2 col-sm-2 hidden-xs text-center">
+            <a class="btn btn-primary" href=""> <!-- sends to send to channel url -->
+                Go to site <i class="icon-arrow-right"></i> 
+            </a>
+        </div>
+
+        <div class="col-xs-6  hidden-md hidden-sm hidden-lg text-center" style="margin: 10px 0">
+            <a class="btn btn-primary" href="">
+                Go to site <i class="icon-arrow-right"></i> 
+            </a>
+
+        </div>
+
+        </div>
+        <p class="text-right"> Rates accurate as of: </p>
+        
+        <div style="display:none" class="slidingDiv">
+           <!--  <div class="row">
+                <div class="col-md-4">
+                    Total fee
+                </div>
+                <div class="col-md-4">
+                    ${totalFee.round(3)} ${searchCO?.fromCurrency}
+                </div>
+                <div class="col-md-4">
+                    ${(totalFee*100/searchCO?.amount)?.round(3)} %
+                </div>
+            </div>
+            <div class="row">
+                 <div class="col-md-4">
+                    Margin on rate
+                </div>
+                <div class="col-md-4">
+                    ${(yr - exchangeRate?.exchangeRate).round(3)} ${searchCO?.toCurrency} per ${searchCO?.fromCurrency}
+                </div>
+                <div class="col-md-4">
+                    ${((yr - exchangeRate?.exchangeRate)*100/yr)?.round(3)} %
+                </div>
+            </div>
+             <div class="row">
+                <div class="col-md-4">
+                    Total charges
+                </div>
+                <div class="col-md-4">
+                    ${totalCost} ${searchCO?.fromCurrency}
+                </div>
+                <div class="col-md-4">
+                    ${(totalCost * 100/searchCO?.amount).round(2)} %
+                </div>
+            </div> -->
+
+
+        </div>
+    </div>
+    {% endfor %}
+<style>
+    button:focus { outline:0 !important; }
+</style>
