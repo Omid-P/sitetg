@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 """
 Django settings for tguru project.
 
@@ -12,6 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -41,7 +43,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'landingpage',
     'currencyconv',
-    'reviews'
+    'reviews',
+    'djcelery',
+    'scraper'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -75,7 +79,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tguru.wsgi.application'
 
-
+BROKER_URL = "amqp://root:tgpass@localhost:5672/myvhost"
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
